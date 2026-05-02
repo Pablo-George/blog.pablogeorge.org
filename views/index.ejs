@@ -1,0 +1,27 @@
+<div class="eyebrow">pablo's blog</div>
+<h1>Thoughts on<br><span>code, tech,<br>and life.</span></h1>
+<p style="font-size: 0.95rem; color: var(--text-mid); max-width: 520px; line-height: 1.8; margin-bottom: 2.5rem;">
+  A personal blog by Pablo George. Sharing insights, experiences, and lessons learned in tech.
+</p>
+
+<% if (posts.length === 0) { %>
+  <div class="empty-state">
+    <p>No posts yet. <% if (user) { %><a href="/posts/new">Create the first one!</a><% } else { %>Please <a href="/login">login</a> to create posts.<% } %></p>
+  </div>
+<% } else { %>
+  <hr class="divider" style="border: none; border-top: 1px solid var(--border); margin: 3rem 0;">
+  <div class="section-label" style="font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 2.5rem;">recent posts</div>
+  <div class="posts-grid">
+    <% posts.forEach(post => { %>
+      <a href="/posts/<%= post.id %>" class="post-card">
+        <div class="post-date"><%= new Date(post.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %></div>
+        <div>
+          <div class="post-title"><%= post.title %></div>
+          <% if (post.excerpt) { %>
+            <div class="post-excerpt"><%= post.excerpt %></div>
+          <% } %>
+        </div>
+      </a>
+    <% }) %>
+  </div>
+<% } %>

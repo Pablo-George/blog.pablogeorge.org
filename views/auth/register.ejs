@@ -1,0 +1,21 @@
+<div class="eyebrow">get started</div>
+<h1>Create your<br><span>account</span></h1>
+
+<form action="/register" method="POST" style="margin-top: 2rem; max-width: 400px;">
+  <div>
+    <label for="username">username</label>
+    <input type="text" name="username" id="username" required>
+  </div>
+  <div>
+    <label for="email">email</label>
+    <input type="email" name="email" id="email" required>
+  </div>
+  <div>
+    <label for="password">password</label>
+    <input type="password" name="password" id="password" required>
+  </div>
+  <button type="submit">register</button>
+</form>
+<p style="margin-top: 1.5rem; font-size: 0.82rem; color: var(--text-muted);">
+  Already have an account? <a href="/login" style="color: var(--purple);">Login</a>
+</p>

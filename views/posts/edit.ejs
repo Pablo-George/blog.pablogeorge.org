@@ -1,0 +1,35 @@
+<div class="eyebrow">edit post</div>
+<h1>Edit<br><span>your post</span></h1>
+
+<form action="/posts/<%= post.id %>?_method=PUT" method="POST" hx-boost="true" style="margin-top: 2rem;">
+  <div>
+    <label for="title">title</label>
+    <input type="text" name="title" id="title" value="<%= post.title %>" required>
+  </div>
+  <div>
+    <label for="excerpt">excerpt</label>
+    <textarea name="excerpt" id="excerpt" rows="2"><%= post.excerpt || '' %></textarea>
+  </div>
+  <div>
+    <label for="featured_image">featured image url</label>
+    <input type="url" name="featured_image" id="featured_image" value="<%= post.featured_image || '' %>" placeholder="https://...">
+  </div>
+  <div>
+    <label for="content">content</label>
+    <textarea name="content" id="content" rows="10" required><%= post.content %></textarea>
+  </div>
+  <div>
+    <label for="status">status</label>
+    <select name="status" id="status">
+      <option value="draft" <%= post.status === 'draft' ? 'selected' : '' %>>Draft</option>
+      <option value="published" <%= post.status === 'published' ? 'selected' : '' %>>Published</option>
+    </select>
+  </div>
+  <button type="submit">update post</button>
+  <a href="/" class="button ghost" style="margin-left: 0.5rem;">cancel</a>
+</form>
+
+<form action="/posts/<%= post.id %>?_method=DELETE" method="POST" style="margin-top: 3rem;"
+      hx-confirm="Are you sure you want to delete this post?">
+  <button type="submit" class="button danger">delete post</button>
+</form>

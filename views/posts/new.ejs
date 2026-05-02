@@ -1,0 +1,30 @@
+<div class="eyebrow">share your thoughts</div>
+<h1>Create<br><span>new post</span></h1>
+
+<form action="/posts" method="POST" hx-boost="true" style="margin-top: 2rem;">
+  <div>
+    <label for="title">title</label>
+    <input type="text" name="title" id="title" required>
+  </div>
+  <div>
+    <label for="excerpt">excerpt</label>
+    <textarea name="excerpt" id="excerpt" rows="2"></textarea>
+  </div>
+  <div>
+    <label for="featured_image">featured image url</label>
+    <input type="url" name="featured_image" id="featured_image" placeholder="https://...">
+  </div>
+  <div>
+    <label for="content">content</label>
+    <textarea name="content" id="content" rows="10" required></textarea>
+  </div>
+  <div>
+    <label for="status">status</label>
+    <select name="status" id="status">
+      <option value="draft">Draft</option>
+      <option value="published">Published</option>
+    </select>
+  </div>
+  <button type="submit">save post</button>
+  <a href="/" class="button ghost" style="margin-left: 0.5rem;">cancel</a>
+</form>

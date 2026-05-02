@@ -1,0 +1,26 @@
+<a href="/" class="back-link">back to posts</a>
+
+<article class="post">
+  <div class="post-meta">
+    <span class="post-tag-bordered"><%= post.status %></span>
+  </div>
+  
+  <h1 class="post-title-large"><%= post.title %></h1>
+  
+  <hr class="post-divider">
+  
+  <% if (post.featured_image) { %>
+    <img src="<%= post.featured_image %>" alt="<%= post.title %>" style="width: 100%; margin-bottom: 2.5rem;">
+  <% } %>
+  
+  <div class="post-content">
+    <%- post.content.replace(/\n/g, '<br>') %>
+  </div>
+  
+  <div class="post-actions">
+    <% if (typeof user !== 'undefined' && user && user.id === post.user_id) { %>
+      <a href="/posts/<%= post.id %>/edit" class="button">edit post</a>
+    <% } %>
+    <a href="/" class="button ghost">back to home</a>
+  </div>
+</article>
