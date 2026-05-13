@@ -20,11 +20,14 @@
   <div class="nav-inner">
     <a href="/" class="logo">blog<span style="color:var(--text)">.pablogeorge.org</span></a>
 
-    <div class="nav-links">
+    <div class="nav-links" id="nav-links">
       <a href="/">Home</a>
       <a href="/posts">Posts</a>
       <a href="/about">About</a>
       <a href="/contact">Contact</a>
+      <% if (user) { %>
+        <a href="/posts/new">+ New Post</a>
+      <% } %>
     </div>
 
     <div class="nav-right">
@@ -35,17 +38,16 @@
 
       <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle theme">☀</button>
 
-      <a href="#subscribe" class="btn-subscribe">Subscribe</a>
-
       <div class="nav-user">
         <% if (user) { %>
-          <a href="/posts/new">+ New Post</a>
           <span><%= user.username %></span>
           <form action="/logout" method="POST">
             <button type="submit">Logout</button>
           </form>
         <% } %>
       </div>
+
+      <button class="nav-burger" id="nav-burger" type="button" aria-label="Toggle menu">&#9776;</button>
     </div>
   </div>
 </nav>
@@ -124,6 +126,16 @@
       html.setAttribute('data-theme', next);
       localStorage.setItem('theme', next);
       btn.textContent = next === 'dark' ? '☀' : '☾';
+    });
+  })();
+
+  (function() {
+    var burger = document.getElementById('nav-burger');
+    var links  = document.getElementById('nav-links');
+    if (!burger || !links) return;
+    burger.addEventListener('click', function() {
+      var open = links.classList.toggle('nav-open');
+      burger.setAttribute('aria-expanded', open);
     });
   })();
 </script>

@@ -1163,6 +1163,37 @@ textarea.drag-over {
 
 /* ── Responsive ──────────────────────────────────────────── */
 
+/* ── Hamburger button (hidden on desktop) ────────────────── */
+
+.nav-burger {
+  display: none;
+  background: none;
+  border: 1px solid var(--border-dark);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1.1rem;
+  width: 36px;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  cursor: pointer;
+  transform: none;
+  opacity: 1;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.nav-burger:hover {
+  border-color: var(--purple);
+  color: var(--purple);
+  background: transparent;
+  transform: none;
+  opacity: 1;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+
 @media (max-width: 900px) {
   .subscribe-banner-inner { flex-direction: column; text-align: center; gap: 24px; }
   .subscribe-form { min-width: unset; width: 100%; max-width: 400px; margin: 0 auto; }
@@ -1170,22 +1201,94 @@ textarea.drag-over {
 }
 
 @media (max-width: 768px) {
-  .nav-inner { padding: 0 16px; gap: 0; }
+  /* Nav */
+  .nav-inner { padding: 0 16px; position: relative; flex-wrap: wrap; height: auto; min-height: 64px; }
+  .logo { margin-right: 0; }
+  .nav-burger { display: flex; }
   .search-form { display: none; }
-  .nav-links a { padding: 0 10px; font-size: 0.8125rem; }
-  main { padding: 32px 16px 60px; }
-  .posts-grid { grid-template-columns: 1fr; gap: 20px; }
+  .btn-subscribe { display: none; }
+  .nav-user { display: none; }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    border-top: 1px solid var(--border);
+    padding: 8px 0 12px;
+    height: auto;
+    order: 3;
+  }
+
+  .nav-links.nav-open { display: flex; }
+
+  .nav-links a {
+    height: auto;
+    padding: 10px 4px;
+    font-size: 0.9375rem;
+    border-bottom: none;
+    border-left: 2px solid transparent;
+  }
+
+  .nav-links a:hover {
+    border-bottom: none;
+    border-left-color: var(--purple);
+    padding-left: 10px;
+  }
+
+  .nav-right { margin-left: auto; gap: 8px; }
+
+  /* Layout */
+  main { padding: 28px 16px 56px; }
+
+  /* Hero */
+  .hero { padding: 40px 0 36px; }
+  .hero h1 { font-size: clamp(1.5rem, 6vw, 2.2rem); }
+
+  /* Posts */
+  .posts-grid { grid-template-columns: 1fr; gap: 16px; }
+
+  /* Article */
+  .article-wrap { padding: 0; }
+  .entry-title { font-size: clamp(1.4rem, 5vw, 2rem); }
+  .entry-content { font-size: 0.9375rem; }
+  .entry-content pre { padding: 14px 16px; font-size: 0.8125rem; }
+  .post-actions { flex-wrap: wrap; }
+  .article-subscribe { padding: 28px 20px; }
+
+  /* Pages */
+  .page-wrap { padding: 0; }
+  .page-hero h1 { font-size: clamp(1.4rem, 5vw, 2rem); }
+  .contact-form-wrap { padding: 24px 20px; }
+
+  /* Post form */
+  .post-form-wrap h1 { font-size: 1.5rem; }
+
+  /* Footer */
   .footer-inner { grid-template-columns: 1fr; gap: 28px; padding: 32px 16px; }
   .footer-bottom-inner { flex-direction: column; gap: 4px; text-align: center; padding: 14px 16px; }
   .subscribe-banner { padding: 40px 16px; }
-  .article-subscribe { padding: 28px 20px; }
 }
 
 @media (max-width: 480px) {
-  .logo { font-size: 1.1rem; margin-right: 20px; }
-  .btn-subscribe { padding: 7px 14px; font-size: 0.75rem; }
-  .nav-user { display: none; }
+  .logo { font-size: 1.05rem; }
+
+  /* Forms — bigger touch targets */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="url"],
+  textarea,
+  select { font-size: 1rem; padding: 12px 14px; }
+
+  button, .button { padding: 12px 20px; }
+
   .subscribe-form { flex-direction: column; }
   .subscribe-form input[type="email"],
   .subscribe-form button[type="submit"] { width: 100%; }
+
+  /* Auth */
+  .auth-wrap { padding: 0 4px; }
+
+  /* Post card body */
+  .post-card-body { padding: 16px 18px 20px; }
 }
