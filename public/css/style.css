@@ -1153,10 +1153,6 @@ textarea.drag-over {
   opacity: 1;
 }
 
-.theme-toggle .icon-sun  { display: none; }
-.theme-toggle .icon-moon { display: block; }
-html[data-theme="dark"] .theme-toggle .icon-sun  { display: block; }
-html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
 
 /* ── Animations ──────────────────────────────────────────── */
 
