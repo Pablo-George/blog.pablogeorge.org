@@ -6,7 +6,7 @@
   <title><%= typeof title !== 'undefined' ? title + ' — ' : '' %>blog.pablogeorge.org</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/htmx.org@1.9.10"></script>
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/style.css?v=<%= cssVersion %>">
   <script>
     (function() {
       var saved = localStorage.getItem('theme');
