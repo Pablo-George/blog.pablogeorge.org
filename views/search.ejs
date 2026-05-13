@@ -1,21 +1,17 @@
-<div class="hero">
-  <h1>blog<span>.pablogeorge.org</span></h1>
-  <p>Real notes from a working IT professional. No textbook theory — just what actually happens when you're managing endpoints, troubleshooting Entra ID, and figuring out Intune policies in a live environment.</p>
+<div class="search-header">
+  <h1>Search Results</h1>
+  <p><% if (query) { %>Showing results for "<strong><%= query %></strong>"<% } else { %>Enter a search term above.<% } %></p>
 </div>
 
-<% if (posts.length === 0) { %>
+<% if (results.length === 0 && query) { %>
   <div class="posts-grid">
     <div class="empty-state">
-      <p>No posts yet. <% if (user) { %><a href="/posts/new">Create the first one!</a><% } else { %><a href="/login">Login</a> to create posts.<% } %></p>
+      <p>No posts found for "<strong><%= query %></strong>". Try a different search.</p>
     </div>
   </div>
 <% } else { %>
-  <div class="section-header">
-    <h2 class="section-title">Recent Posts</h2>
-    <a href="/posts" class="view-all">View All Posts &rarr;</a>
-  </div>
   <div class="posts-grid">
-    <% posts.forEach(post => { %>
+    <% results.forEach(post => { %>
       <a href="/posts/<%= post.id %>" class="post-card">
         <% if (post.featured_image) { %>
           <img src="<%= post.featured_image %>" alt="<%= post.title %>" class="post-card-img">

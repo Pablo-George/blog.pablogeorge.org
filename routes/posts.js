@@ -1,11 +1,23 @@
 const express = require('express')
 const router = express.Router()
 const db = require('../models/db')
+const { marked } = require('marked')
 
 function requireAuth(req, res, next) {
   if (!req.session.user) return res.redirect('/login')
   next()
 }
+
+router.get('/', (req, res) => {
+  const posts = db.prepare(`
+    SELECT posts.*, users.username
+    FROM posts
+    JOIN users ON posts.user_id = users.id
+    WHERE posts.status = 'published'
+    ORDER BY created_at DESC
+  `).all()
+  res.render('layouts/main', { body: 'index', posts, title: 'All Posts' })
+})
 
 router.get('/new', requireAuth, (req, res) => {
   res.render('layouts/main', { body: 'posts/new' })
@@ -58,6 +70,7 @@ router.get('/:id', (req, res) => {
   `).get(req.params.id)
   
   if (!post) return res.redirect('/')
+  post.contentHtml = marked.parse(post.content || '')
   res.render('layouts/main', { body: 'posts/show', post })
 })
 

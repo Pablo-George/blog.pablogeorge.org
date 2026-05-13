@@ -1,30 +1,42 @@
-<div class="eyebrow">share your thoughts</div>
-<h1>Create<br><span>new post</span></h1>
+<div class="post-form-wrap">
+  <div class="page-eyebrow">Share your thoughts</div>
+  <h1>Create New Post</h1>
 
-<form action="/posts" method="POST" hx-boost="true" style="margin-top: 2rem;">
-  <div>
-    <label for="title">title</label>
-    <input type="text" name="title" id="title" required>
-  </div>
-  <div>
-    <label for="excerpt">excerpt</label>
-    <textarea name="excerpt" id="excerpt" rows="2"></textarea>
-  </div>
-  <div>
-    <label for="featured_image">featured image url</label>
-    <input type="url" name="featured_image" id="featured_image" placeholder="https://...">
-  </div>
-  <div>
-    <label for="content">content</label>
-    <textarea name="content" id="content" rows="10" required></textarea>
-  </div>
-  <div>
-    <label for="status">status</label>
-    <select name="status" id="status">
-      <option value="draft">Draft</option>
-      <option value="published">Published</option>
-    </select>
-  </div>
-  <button type="submit">save post</button>
-  <a href="/" class="button ghost" style="margin-left: 0.5rem;">cancel</a>
-</form>
+  <form action="/posts" method="POST" hx-boost="true">
+    <div>
+      <label for="title">Title</label>
+      <input type="text" name="title" id="title" placeholder="Post title" required>
+    </div>
+    <div>
+      <label for="excerpt">Excerpt</label>
+      <textarea name="excerpt" id="excerpt" rows="2" placeholder="A short summary shown in post cards..."></textarea>
+    </div>
+    <div>
+      <label for="featured_image">Featured Image URL</label>
+      <input type="url" name="featured_image" id="featured_image" placeholder="https://...">
+    </div>
+    <div>
+      <label for="content">Content (Markdown supported)</label>
+      <div class="editor-toolbar">
+        <button type="button" class="toolbar-btn" id="upload-btn" title="Upload image">
+          &#128247; Upload Image
+        </button>
+        <span class="toolbar-hint">or paste an image from clipboard anywhere in the editor</span>
+        <input type="file" id="image-input" accept="image/*" style="display:none">
+      </div>
+      <textarea name="content" id="content" rows="18" required
+        placeholder="# Your heading&#10;&#10;Write your post in **Markdown**..."></textarea>
+    </div>
+    <div>
+      <label for="status">Status</label>
+      <select name="status" id="status">
+        <option value="draft">Draft</option>
+        <option value="published">Published</option>
+      </select>
+    </div>
+    <button type="submit">Save Post</button>
+    <a href="/" class="button ghost" style="margin-left: 0.5rem;">Cancel</a>
+  </form>
+</div>
+
+<%- include('./upload-script.ejs') %>

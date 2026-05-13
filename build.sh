@@ -1,14 +1,23 @@
 #!/bin/bash
 set -e
 
-echo "Building Docker image..."
-docker build -t blog.pablogeorge.org:latest .
+IMAGE="blog.pablogeorge.org:latest"
 
-echo "Loading image into k3s..."
-sudo k3s ctr images import <(docker save blog.pablogeorge.org:latest)
+echo "▶ Building Docker image..."
+docker build -t "$IMAGE" .
 
-echo "Applying Kubernetes manifests..."
+echo "▶ Loading image into k3s..."
+docker save "$IMAGE" | sudo k3s ctr images import -
+
+echo "▶ Applying manifests..."
 kubectl apply -f k8s/
 
-echo "Deployment complete!"
+echo "▶ Rolling restart..."
+kubectl rollout restart deployment/blog
+
+echo "▶ Waiting for rollout..."
+kubectl rollout status deployment/blog
+
+echo ""
+echo "✓ Done. Running pods:"
 kubectl get pods -l app=blog

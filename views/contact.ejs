@@ -1,0 +1,43 @@
+<div class="page-wrap">
+  <div class="page-hero">
+    <h1>Contact</h1>
+    <p>Got a question, a topic suggestion, or some feedback? I'd love to hear from you.</p>
+  </div>
+
+  <div class="contact-grid">
+    <div class="contact-card">
+      <h3>General Enquiries</h3>
+      <p>Questions, topic suggestions, or just saying hi.</p>
+      <a href="mailto:pablogeorgeporras@gmail.com">pablogeorgeporras@gmail.com</a>
+    </div>
+    <div class="contact-card">
+      <h3>Collaborate</h3>
+      <p>Guest posts, joint projects, or content partnerships.</p>
+      <a href="mailto:pablogeorgeporras@gmail.com">pablogeorgeporras@gmail.com</a>
+    </div>
+    <div class="contact-card">
+      <h3>Feedback</h3>
+      <p>Found an error or something unclear? Let me know.</p>
+      <a href="mailto:pablogeorgeporras@gmail.com">pablogeorgeporras@gmail.com</a>
+    </div>
+  </div>
+
+  <div class="contact-form-wrap">
+    <h2>Send a Message</h2>
+    <form action="/contact" method="POST">
+      <div>
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name" placeholder="Your name" required>
+      </div>
+      <div>
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" placeholder="your@email.com" required>
+      </div>
+      <div>
+        <label for="message">Message</label>
+        <textarea name="message" id="message" rows="6" placeholder="What's on your mind?" required></textarea>
+      </div>
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+</div>

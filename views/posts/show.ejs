@@ -1,26 +1,35 @@
-<a href="/" class="back-link">back to posts</a>
+<div class="article-wrap">
+  <a href="/" class="back-link">&larr; Back to Posts</a>
 
-<article class="post">
-  <div class="post-meta">
-    <span class="post-tag-bordered"><%= post.status %></span>
-  </div>
-  
-  <h1 class="post-title-large"><%= post.title %></h1>
-  
-  <hr class="post-divider">
-  
-  <% if (post.featured_image) { %>
-    <img src="<%= post.featured_image %>" alt="<%= post.title %>" style="width: 100%; margin-bottom: 2.5rem;">
-  <% } %>
-  
-  <div class="post-content">
-    <%- post.content.replace(/\n/g, '<br>') %>
-  </div>
-  
-  <div class="post-actions">
-    <% if (typeof user !== 'undefined' && user && user.id === post.user_id) { %>
-      <a href="/posts/<%= post.id %>/edit" class="button">edit post</a>
-    <% } %>
-    <a href="/" class="button ghost">back to home</a>
-  </div>
-</article>
+  <article>
+    <div class="entry-header">
+      <% if (post.status === 'draft') { %>
+        <span class="post-status-badge">Draft</span>
+      <% } %>
+      <div class="entry-meta">
+        <span class="entry-date"><%= new Date(post.created_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) %></span>
+      </div>
+      <h1 class="entry-title"><%= post.title %></h1>
+    </div>
+
+    <div class="entry-content">
+      <%- post.contentHtml %>
+    </div>
+
+    <div class="article-subscribe">
+      <h3>Enjoyed this post?</h3>
+      <p>Subscribe to get new posts delivered straight to your inbox.</p>
+      <form class="subscribe-form" action="/subscribe" method="POST">
+        <input type="email" name="email" placeholder="your@email.com" required>
+        <button type="submit">SUBSCRIBE</button>
+      </form>
+    </div>
+
+    <div class="post-actions">
+      <% if (typeof user !== 'undefined' && user && user.id === post.user_id) { %>
+        <a href="/posts/<%= post.id %>/edit" class="button">Edit Post</a>
+      <% } %>
+      <a href="/" class="button ghost">&larr; Back to Home</a>
+    </div>
+  </article>
+</div>
