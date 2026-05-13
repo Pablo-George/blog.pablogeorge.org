@@ -34,10 +34,13 @@ app.use(session({
   cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 }
 }))
 
+const { version } = require('./package.json')
+
 app.use((req, res, next) => {
   res.locals.user = req.session.user || null
   res.locals.flash = req.session.flash || null
   res.locals.query = ''
+  res.locals.cssVersion = version
   delete req.session.flash
   next()
 })
