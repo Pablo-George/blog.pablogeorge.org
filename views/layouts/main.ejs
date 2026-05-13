@@ -3,36 +3,107 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= typeof title !== 'undefined' ? title + ' - ' : '' %>blog.pablogeorge.org</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <title><%= typeof title !== 'undefined' ? title + ' — ' : '' %>blog.pablogeorge.org</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/htmx.org@1.9.10"></script>
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
 <nav>
-  <a href="/" class="logo">blog<span>.pablogeorge.org</span></a>
-  <div class="nav-links">
-    <% if (user) { %>
-      <a href="/posts/new">new post</a>
-      <span><%= user.username %></span>
-      <form action="/logout" method="POST">
-        <button type="submit">logout</button>
+  <div class="nav-inner">
+    <a href="/" class="logo">blog<span style="color:var(--text)">.pablogeorge.org</span></a>
+
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/posts">Posts</a>
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+    </div>
+
+    <div class="nav-right">
+      <form class="search-form" action="/search" method="GET">
+        <input type="text" name="q" placeholder="Search posts..." value="<%= typeof query !== 'undefined' ? query : '' %>">
+        <button type="submit" aria-label="Search">&#128269;</button>
       </form>
-    <% } else { %>
-      <a href="/login">login</a>
-      <a href="/register">register</a>
-    <% } %>
+
+      <a href="#subscribe" class="btn-subscribe">Subscribe</a>
+
+      <div class="nav-user">
+        <% if (user) { %>
+          <a href="/posts/new">+ New Post</a>
+          <span><%= user.username %></span>
+          <form action="/logout" method="POST">
+            <button type="submit">Logout</button>
+          </form>
+        <% } %>
+      </div>
+    </div>
   </div>
 </nav>
 
-<% if (typeof error !== 'undefined') { %>
-  <div class="alert error"><%= error %></div>
+<% if (flash) { %>
+  <div class="alert-bar">
+    <div class="alert <%= flash.type %>"><%= flash.message %></div>
+  </div>
 <% } %>
 
 <main>
   <%- include('../' + body + '.ejs') %>
 </main>
+
+<section id="subscribe" class="subscribe-banner">
+  <div class="subscribe-banner-inner">
+    <div class="subscribe-banner-text">
+      <h2>Stay in the loop</h2>
+      <p>Get new posts delivered to your inbox. No spam, ever.</p>
+    </div>
+    <form class="subscribe-form" action="/subscribe" method="POST">
+      <input type="email" name="email" placeholder="your@email.com" required>
+      <button type="submit">SUBSCRIBE</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="/" class="logo">blog.pablogeorge.org</a>
+      <p>Real notes from a working IT professional. No textbook theory — just what actually happens when you're in the trenches.</p>
+      <div class="social-links">
+        <a href="https://x.com" class="social-link" aria-label="X / Twitter">𝕏</a>
+        <a href="https://linkedin.com" class="social-link" aria-label="LinkedIn">in</a>
+        <a href="https://github.com" class="social-link" aria-label="GitHub">gh</a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/posts">Posts</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </div>
+
+    <% if (user) { %>
+    <div class="footer-col">
+      <h4>Account</h4>
+      <ul>
+        <li><a href="/posts/new">New Post</a></li>
+      </ul>
+    </div>
+    <% } %>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-bottom-inner">
+      <span>Copyright &copy; <%= new Date().getFullYear() %> blog.pablogeorge.org</span>
+      <span>Powered by Pablo George</span>
+    </div>
+  </div>
+</footer>
 
 </body>
 </html>

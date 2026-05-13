@@ -1,21 +1,29 @@
-<div class="eyebrow">get started</div>
-<h1>Create your<br><span>account</span></h1>
+<div class="auth-wrap">
+  <div class="page-eyebrow">Create account</div>
+  <h1>Register</h1>
+  <p class="subtitle">Already have an account? <a href="/login">Login here</a></p>
 
-<form action="/register" method="POST" style="margin-top: 2rem; max-width: 400px;">
-  <div>
-    <label for="username">username</label>
-    <input type="text" name="username" id="username" required>
-  </div>
-  <div>
-    <label for="email">email</label>
-    <input type="email" name="email" id="email" required>
-  </div>
-  <div>
-    <label for="password">password</label>
-    <input type="password" name="password" id="password" required>
-  </div>
-  <button type="submit">register</button>
-</form>
-<p style="margin-top: 1.5rem; font-size: 0.82rem; color: var(--text-muted);">
-  Already have an account? <a href="/login" style="color: var(--purple);">Login</a>
-</p>
+  <% if (typeof error !== 'undefined') { %>
+    <div class="alert error"><%= error %></div>
+  <% } %>
+
+  <form action="/register" method="POST">
+    <div>
+      <label for="username">Username</label>
+      <input type="text" name="username" id="username" required autofocus>
+    </div>
+    <div>
+      <label for="email">Email</label>
+      <input type="email" name="email" id="email" required>
+    </div>
+    <div>
+      <label for="password">Password</label>
+      <input type="password" name="password" id="password" required>
+    </div>
+    <div>
+      <label for="invite_code">Invite Code</label>
+      <input type="password" name="invite_code" id="invite_code" required placeholder="Required to register">
+    </div>
+    <button type="submit">Create Account</button>
+  </form>
+</div>

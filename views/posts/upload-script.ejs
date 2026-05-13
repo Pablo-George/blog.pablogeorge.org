@@ -1,0 +1,80 @@
+<script>
+(function () {
+  const textarea = document.getElementById('content')
+  const uploadBtn = document.getElementById('upload-btn')
+  const imageInput = document.getElementById('image-input')
+
+  function insertAtCursor(text) {
+    const start = textarea.selectionStart
+    const end = textarea.selectionEnd
+    const before = textarea.value.slice(0, start)
+    const after = textarea.value.slice(end)
+    const needsNewline = before.length > 0 && !before.endsWith('\n')
+    textarea.value = before + (needsNewline ? '\n' : '') + text + '\n' + after
+    const pos = before.length + (needsNewline ? 1 : 0) + text.length + 1
+    textarea.setSelectionRange(pos, pos)
+    textarea.focus()
+  }
+
+  function showStatus(msg, isError) {
+    uploadBtn.textContent = msg
+    uploadBtn.style.color = isError ? '#dc2626' : 'var(--purple)'
+    setTimeout(() => {
+      uploadBtn.innerHTML = '&#128247; Upload Image'
+      uploadBtn.style.color = ''
+    }, 2500)
+  }
+
+  async function uploadFile(file) {
+    if (!file || !file.type.startsWith('image/')) return
+    uploadBtn.textContent = 'Uploading...'
+
+    const fd = new FormData()
+    fd.append('image', file)
+
+    try {
+      const res = await fetch('/upload', { method: 'POST', body: fd })
+      const data = await res.json()
+      if (data.url) {
+        const name = file.name.replace(/\.[^.]+$/, '') || 'image'
+        insertAtCursor(`![${name}](${data.url})`)
+        showStatus('Inserted!', false)
+      } else {
+        showStatus(data.error || 'Upload failed', true)
+      }
+    } catch {
+      showStatus('Upload failed', true)
+    }
+  }
+
+  // Button click → file picker
+  uploadBtn.addEventListener('click', () => imageInput.click())
+  imageInput.addEventListener('change', () => {
+    if (imageInput.files[0]) uploadFile(imageInput.files[0])
+    imageInput.value = ''
+  })
+
+  // Paste image from clipboard
+  textarea.addEventListener('paste', (e) => {
+    const file = Array.from(e.clipboardData.items)
+      .find(i => i.kind === 'file' && i.type.startsWith('image/'))
+    if (file) {
+      e.preventDefault()
+      uploadFile(file.getAsFile())
+    }
+  })
+
+  // Drag and drop onto textarea
+  textarea.addEventListener('dragover', (e) => {
+    e.preventDefault()
+    textarea.classList.add('drag-over')
+  })
+  textarea.addEventListener('dragleave', () => textarea.classList.remove('drag-over'))
+  textarea.addEventListener('drop', (e) => {
+    e.preventDefault()
+    textarea.classList.remove('drag-over')
+    const file = Array.from(e.dataTransfer.files).find(f => f.type.startsWith('image/'))
+    if (file) uploadFile(file)
+  })
+})()
+</script>
