@@ -16,8 +16,8 @@ spec:
     spec:
       containers:
       - name: blog
-        image: blog.pablogeorge.org:latest
-        imagePullPolicy: Never
+        image: ghcr.io/pablo-george/blog.pablogeorge.org:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 3000
         env:
@@ -26,10 +26,19 @@ spec:
             secretKeyRef:
               name: blog-secrets
               key: session-secret
+        - name: INVITE_CODE
+          valueFrom:
+            secretKeyRef:
+              name: blog-secrets
+              key: invite-code
         - name: NODE_ENV
           value: "production"
         - name: SQLITE_PATH
           value: "/data/blog.db"
+        - name: UPLOADS_PATH
+          value: "/data/uploads"
+        - name: PORT
+          value: "3000"
         volumeMounts:
         - name: data
           mountPath: /data
@@ -59,12 +68,4 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: blog-secrets
-type: Opaque
-stringData:
-  session-secret: change-me-to-secure-random-string
+      storage: 5Gi
