@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: blog
+  namespace: blog
   labels:
     app: blog
 spec:
@@ -15,54 +16,56 @@ spec:
         app: blog
     spec:
       containers:
-      - name: blog
-        image: ghcr.io/pablo-george/blog.pablogeorge.org:latest
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 3000
-        env:
-        - name: SESSION_SECRET
-          valueFrom:
-            secretKeyRef:
-              name: blog-secrets
-              key: session-secret
-        - name: INVITE_CODE
-          valueFrom:
-            secretKeyRef:
-              name: blog-secrets
-              key: invite-code
-        - name: NODE_ENV
-          value: "production"
-        - name: SQLITE_PATH
-          value: "/data/blog.db"
-        - name: UPLOADS_PATH
-          value: "/data/uploads"
-        - name: PORT
-          value: "3000"
-        volumeMounts:
-        - name: data
-          mountPath: /data
+        - name: blog
+          image: ghcr.io/pablo-george/blog.pablogeorge.org:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+          env:
+            - name: SESSION_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: blog-secrets
+                  key: session-secret
+            - name: INVITE_CODE
+              valueFrom:
+                secretKeyRef:
+                  name: blog-secrets
+                  key: invite-code
+            - name: NODE_ENV
+              value: "production"
+            - name: SQLITE_PATH
+              value: "/data/blog.db"
+            - name: UPLOADS_PATH
+              value: "/data/uploads"
+            - name: PORT
+              value: "3000"
+          volumeMounts:
+            - name: data
+              mountPath: /data
       volumes:
-      - name: data
-        persistentVolumeClaim:
-          claimName: blog-data
+        - name: data
+          persistentVolumeClaim:
+            claimName: blog-data
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: blog
+  namespace: blog
 spec:
   selector:
     app: blog
   ports:
-  - port: 3000
-    targetPort: 3000
+    - port: 3000
+      targetPort: 3000
   type: ClusterIP
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: blog-data
+  namespace: blog
 spec:
   accessModes:
     - ReadWriteOnce
