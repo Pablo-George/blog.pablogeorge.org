@@ -44,9 +44,11 @@ app.use((req, res, next) => {
 
 const authRoutes = require('./routes/auth')
 const postRoutes = require('./routes/posts')
+const apiRoutes = require('./routes/api')
 
 app.use('/', authRoutes)
 app.use('/posts', postRoutes)
+app.use('/api', apiRoutes)
 
 app.get('/', (req, res) => {
   const posts = db.prepare(`
